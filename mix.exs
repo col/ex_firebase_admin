@@ -11,7 +11,8 @@ defmodule FirebaseAdmin.MixProject do
       name: "FirebaseAdmin",
       package: package(),
       description: description(),
-      source_url: "https://github.com/col/ex_firebase_admin"
+      source_url: "https://github.com/col/ex_firebase_admin",
+      homepage_url: "https://github.com/col/ex_firebase_admin"
     ]
   end
 
@@ -39,7 +40,7 @@ defmodule FirebaseAdmin.MixProject do
     [
       name: "ex_firebase_admin",
       files: ~w(lib .formatter.exs mix.exs README.md LICENSE),
-      licenses: ["unlicense"],
+      licenses: ["Apache-2.0"],
       links: %{"GitHub" => "https://github.com/col/ex_firebase_admin"}
     ]
   end

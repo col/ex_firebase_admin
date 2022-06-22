@@ -32,7 +32,8 @@ defmodule FirebaseAdmin.MixProject do
       {:goth, "~> 1.3.0-rc.2"},
       {:hackney, "~> 1.17"},
       {:joken, "~> 2.0"},
-      {:poison, "~> 4.0.1"}
+      {:poison, "~> 4.0.1"},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end
 

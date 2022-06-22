@@ -17,6 +17,14 @@ defmodule FirebaseAdmin do
     get_users_with(:email, email)
   end
 
+  def get_user_with_phone(phone) do
+    get_user_with(:phoneNumber, phone)
+  end
+
+  def get_user_with_email(email) do
+    get_user_with(:email, email)
+  end
+
   def token_for_user(%User{localId: uid}) when is_binary(uid) do
     token_for_user(uid)
   end
@@ -39,6 +47,13 @@ defmodule FirebaseAdmin do
     end
   end
 
+  defp get_user_with(key, value) do
+    case get_users_with(key, value) do
+      {:ok, users} -> {:ok, users |> List.first}
+      error -> error
+    end
+  end
+
   defp parse_users(nil), do: {:ok, []}
 
   defp parse_users(users) do
@@ -53,7 +68,7 @@ defmodule FirebaseAdmin do
 
   defp parse_error(error = {:error, _}), do: error
 
-  defp parse_error(error = {:ok, %{body: body}}) do
+  defp parse_error({:ok, %{body: body}}) do
     message = body
       |> Map.get("error", %{})
       |> Map.get("message", "unknown error")

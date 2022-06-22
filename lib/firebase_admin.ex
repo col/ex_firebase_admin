@@ -25,12 +25,12 @@ defmodule FirebaseAdmin do
     get_user_with(:email, email)
   end
 
-  def token_for_user(%User{localId: uid}) when is_binary(uid) do
-    token_for_user(uid)
+  def token_for_user(%User{localId: uid}, service_account) when is_binary(uid) do
+    token_for_user(uid, service_account)
   end
 
-  def token_for_user(uid) do
-    case uid |> Client.custom_token() |> Client.sign_in_with_custom_token() do
+  def token_for_user(uid, service_account) do
+    case uid |> Client.custom_token(service_account) |> Client.sign_in_with_custom_token() do
       {:ok, %{status: 200, body: body}} ->
         parse_token(body)
       error ->

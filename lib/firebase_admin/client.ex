@@ -1,6 +1,6 @@
 defmodule FirebaseAdmin.Client do
   use Tesla
-  alias FirebaseAdmin.{ServiceAccount, Token}
+  alias FirebaseAdmin.Token
 
   def get_users(uid) do
     get_users_with(:localId, uid)
@@ -18,8 +18,7 @@ defmodule FirebaseAdmin.Client do
     post(client(), "v1/accounts:lookup", %{key => value})
   end
 
-  def custom_token(uid) do
-    service_account = ServiceAccount.from_goth()
+  def custom_token(uid, service_account) do
     payload = %{
       "iss" => service_account.client_email,
       "sub" => service_account.client_email,
@@ -40,7 +39,7 @@ defmodule FirebaseAdmin.Client do
     middleware = [
       {Tesla.Middleware.BaseUrl, "https://identitytoolkit.googleapis.com/"},
       Tesla.Middleware.JSON,
-      {Tesla.Middleware.Headers, [{"authorization", "Bearer " <> token.token }]}
+      {Tesla.Middleware.Headers, [{"authorization", "Bearer " <> token.token}]}
     ]
 
     adapter = {Tesla.Adapter.Hackney, [recv_timeout: 10_000]}

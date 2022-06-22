@@ -4,7 +4,7 @@ defmodule FirebaseAdmin.MixProject do
   def project do
     [
       app: :firebase_admin,
-      version: "0.1.0-rc.1",
+      version: "0.2.0",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -29,7 +29,7 @@ defmodule FirebaseAdmin.MixProject do
   defp deps do
     [
       {:tesla, "~> 1.4"},
-      {:goth, "~> 1.3.0-rc.2"},
+      {:goth, "~> 1.3.0-rc.5"},
       {:hackney, "~> 1.17"},
       {:joken, "~> 2.0"},
       {:poison, "~> 4.0.1"},

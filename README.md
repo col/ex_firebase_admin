@@ -51,9 +51,10 @@ Client library to access Firebase admin features.
 #
 # Generate id tokens
 #
-{:ok, token} = FirebaseAdmin.token_for_user(user)
+service_account = FirebaseAdmin.ServiceAccount.from_file(System.fetch_env!("GOOGLE_APPLICATION_CREDENTIALS"))
+{:ok, token} = FirebaseAdmin.token_for_user(user, service_account)
 # or
-{:ok, token} = FirebaseAdmin.token_for_user("<uid>")
+{:ok, token} = FirebaseAdmin.token_for_user("<uid>", service_account)
  > {:ok,
  %FirebaseAdmin.Models.Token{
    expiresIn: "3600",
@@ -72,7 +73,7 @@ by adding `firebase_admin` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:firebase_admin, "~> 0.1.0"}
+    {:firebase_admin, "~> 0.2.0"}
   ]
 end
 ```
@@ -86,16 +87,20 @@ defmodule MyApp.Application do
 
   @impl true
   def start(_type, _args) do
-    service_account = System.fetch_env!("GOOGLE_APPLICATION_CREDENTIALS") |> File.read!() |> Jason.decode!()
-    children = [
-      {Goth, name: FirebaseAdmin.Goth, source: {:service_account, service_account, []}}
-    ]
+    credentials = System.fetch_env!("GOOGLE_APPLICATION_CREDENTIALS") |> File.read!() |> Jason.decode!()
+    children = [{Goth, name: FirebaseAdmin.Goth, source: {:service_account, credentials, []}}]
 
     Supervisor.start_link(children, strategy: :one_for_one)
   end
 end
 ```
 
-See the [Goth repo](https://github.com/peburrows/goth/tree/master) for more info. 
-**Note:** FirebaseAdmin currently uses HEAD version of Goth in preparation for the v1.3.0 release.
+or 
 
+```elixir
+credentials = System.fetch_env!("GOOGLE_APPLICATION_CREDENTIALS") |> File.read!() |> Jason.decode!()
+{:ok, _} = Goth.start_link(name: FirebaseAdmin.Goth, source: {:service_account, credentials, []})
+```
+
+See the [Goth repo](https://github.com/peburrows/goth/tree/master) for more info. 
+**Note:** FirebaseAdmin currently uses 1.3.0-rc.5 version of Goth in preparation for the v1.3.0 release.

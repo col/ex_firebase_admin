@@ -5,6 +5,8 @@ Client library to access Firebase admin features.
 ## Usage
 
 ```shell
+# Start Goth - See below
+
 #
 # Lookup users by id
 #
@@ -44,9 +46,13 @@ Client library to access Firebase admin features.
    validSince: "1624928169"
  }}
 
-# Or phone or email
-{:ok, user} = FirebaseAdmin.get_users_with_phone("<phone>")
-{:ok, user} = FirebaseAdmin.get_users_with_email("<email>")
+# Get all users by phone or email
+{:ok, users} = FirebaseAdmin.get_users_with_phone("<phone>")
+{:ok, users} = FirebaseAdmin.get_users_with_email("<email>")
+
+# Get individual user by phone or email (just takes the first user in the list)
+{:ok, user} = FirebaseAdmin.get_user_with_phone("<phone>")
+{:ok, user} = FirebaseAdmin.get_user_with_email("<email>")
 
 #
 # Generate id tokens

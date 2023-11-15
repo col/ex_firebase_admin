@@ -29,10 +29,10 @@ defmodule FirebaseAdmin.MixProject do
   defp deps do
     [
       {:tesla, "~> 1.4"},
-      {:goth, "~> 1.3.1"},
+      {:goth, "~> 1.3"},
       {:hackney, "~> 1.17"},
       {:joken, "~> 2.0"},
-      {:poison, "~> 4.0.1"},
+      {:poison, "~> 4.0"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end

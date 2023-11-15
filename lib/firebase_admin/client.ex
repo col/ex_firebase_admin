@@ -22,15 +22,17 @@ defmodule FirebaseAdmin.Client do
     payload = %{
       "iss" => service_account.client_email,
       "sub" => service_account.client_email,
-      "aud" => "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit",
+      "aud" =>
+        "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit",
       "uid" => uid
     }
+
     signer = Joken.Signer.create("RS256", %{"pem" => service_account.private_key})
     Token.generate_and_sign!(payload, signer)
   end
 
   def sign_in_with_custom_token(token) do
-     post(client(), "v1/accounts:signInWithCustomToken", %{token: token, returnSecureToken: true})
+    post(client(), "v1/accounts:signInWithCustomToken", %{token: token, returnSecureToken: true})
   end
 
   def client() do

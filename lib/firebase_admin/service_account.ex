@@ -7,13 +7,13 @@ defmodule FirebaseAdmin.ServiceAccount do
 
   def from_file(file_path) do
     file_path
-      |> File.read!()
-      |> Jason.decode!(as: __MODULE__, keys: :atoms)
+    |> File.read!()
+    |> Jason.decode!(as: __MODULE__, keys: :atoms)
   end
 
   def credentials(service_account) do
     service_account
-    |> Jason.encode!
-    |> Jason.decode!
+    |> Jason.encode!()
+    |> Jason.decode!()
   end
 end

@@ -33,6 +33,7 @@ defmodule FirebaseAdmin do
     case uid |> Client.custom_token(service_account) |> Client.sign_in_with_custom_token() do
       {:ok, %{status: 200, body: body}} ->
         parse_token(body)
+
       error ->
         parse_error(error)
     end
@@ -42,6 +43,7 @@ defmodule FirebaseAdmin do
     case Client.get_users_with(key, value) do
       {:ok, %{status: 200, body: body}} ->
         parse_users(body["users"])
+
       error ->
         parse_error(error)
     end
@@ -49,7 +51,7 @@ defmodule FirebaseAdmin do
 
   defp get_user_with(key, value) do
     case get_users_with(key, value) do
-      {:ok, users} -> {:ok, users |> List.first}
+      {:ok, users} -> {:ok, users |> List.first()}
       error -> error
     end
   end
@@ -69,9 +71,11 @@ defmodule FirebaseAdmin do
   defp parse_error(error = {:error, _}), do: error
 
   defp parse_error({:ok, %{body: body}}) do
-    message = body
+    message =
+      body
       |> Map.get("error", %{})
       |> Map.get("message", "unknown error")
+
     {:error, message}
   end
 end

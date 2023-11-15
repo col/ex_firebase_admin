@@ -25,3 +25,6 @@ firebase_admin-*.tar
 # Temporary files, for example, from tests.
 /tmp/
 *.iml
+.env
+.DS_Store
+sa.json

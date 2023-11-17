@@ -3,8 +3,8 @@ defmodule FirebaseAdmin.MixProject do
 
   def project do
     [
-      version: "0.2.1",
       app: :ex_firebase_admin,
+      version: "0.3.0",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
